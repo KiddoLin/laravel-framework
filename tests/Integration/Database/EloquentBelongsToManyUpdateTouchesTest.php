@@ -2,12 +2,12 @@
 
 namespace Illuminate\Tests\Integration\Database;
 
+use Orchestra\Testbench\TestCase;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-use Orchestra\Testbench\TestCase;
 
 class EloquentBelongsToManyUpdateTouchesTest extends TestCase
 {
@@ -102,10 +102,10 @@ class EloquentBelongsToManyUpdateTouchesTest extends TestCase
      */
     protected function tearDown(): void
     {
-        Schema::dropIfExists('brands');
         Schema::dropIfExists('product_category');
         Schema::dropIfExists('categories');
         Schema::dropIfExists('products');
+        Schema::dropIfExists('brands');
 
         parent::tearDown();
     }
