@@ -1,7 +1,81 @@
 # Release Notes for 5.8.x
 
-## [Unreleased](https://github.com/laravel/framework/compare/v5.8.30...5.8)
+## [Unreleased](https://github.com/laravel/framework/compare/v5.8.35...5.8)
 
+
+## [v5.8.35 (2019-09-03)](https://github.com/laravel/framework/compare/v5.8.34...v5.8.35)
+
+### Added
+- Added support of `NOT RLIKE` SQL operator ([#29788](https://github.com/laravel/framework/pull/29788))
+- Added hebrew letters to `Str:slug` language array ([#29838](https://github.com/laravel/framework/pull/29838), [ba772d6](https://github.com/laravel/framework/commit/ba772d643b88a4646c1161f5325e52de81d7a709))
+- Added support of `php7.4` ([#29842](https://github.com/laravel/framework/pull/29842))
+
+### Fixed
+- Fixed self-referencing `MorphOneOrMany` existence queries ([#29765](https://github.com/laravel/framework/pull/29765))
+- Fixed `QueueFake::size()` method ([#29761](https://github.com/laravel/framework/pull/29761), [ddaf6e6](https://github.com/laravel/framework/commit/ddaf6e63326263a9bb3732e887a2bf8b2381caa1))
+
+### Changed
+- Added note that the GD extension is required for generating images ([#29770](https://github.com/laravel/framework/pull/29770), [#29831](https://github.com/laravel/framework/pull/29831))
+- Changed `monolog/monolog` version to `^1.12` ([#29837](https://github.com/laravel/framework/pull/29837))
+
+
+## [v5.8.34 (2019-08-27)](https://github.com/laravel/framework/compare/v5.8.33...v5.8.34)
+
+### Fixed
+- Fixed `MailMessage::render()` if `view` method was used ([#29698](https://github.com/laravel/framework/pull/29698))
+- Fixed setting of numeric values as model attribute ([#29714](https://github.com/laravel/framework/pull/29714)) 
+- Fixed mocking of events `until` method in `MocksApplicationServices` ([#29708](https://github.com/laravel/framework/pull/29708))
+- Fixed: Use custom attributes in lt/lte/gt/gte rules messages ([#29716](https://github.com/laravel/framework/pull/29716))
+
+### Changed:
+- Changed applying of Aws Instance Profile ([#29738](https://github.com/laravel/framework/pull/29738))
+
+
+## [v5.8.33 (2019-08-20)](https://github.com/laravel/framework/compare/v5.8.32...v5.8.33)
+
+### Added
+- Added `ValidatesWhenResolvedTrait::passedValidation()` callback ([#29549](https://github.com/laravel/framework/pull/29549))
+- Implement new types for email validation support ([#29589](https://github.com/laravel/framework/pull/29589))
+- Added Redis 5 support ([#29606](https://github.com/laravel/framework/pull/29606))
+- Added `insertOrIgnore` support ([#29639](https://github.com/laravel/framework/pull/29639), [46d7e96](https://github.com/laravel/framework/commit/46d7e96ab3ab59339ef0ea8802963b2db84f9ab3), [#29645](https://github.com/laravel/framework/pull/29645))
+- Allowed to override the existing `Whoops` handler.([#29564](https://github.com/laravel/framework/pull/29564))
+
+### Fixed
+- Fixed non-displayable boolean values in validation messages ([#29560](https://github.com/laravel/framework/pull/29560))
+- Avoid undefined index errors when using AWS IAM ([#29565](https://github.com/laravel/framework/pull/29565))
+- Fixed exception message in the `ProviderRepository::writeManifest()` ([#29568](https://github.com/laravel/framework/pull/29568))
+- Fixed invalid link expiry count in ResetPassword ([#29579](https://github.com/laravel/framework/pull/29579))
+- Fixed command testing of `output` and `questions` expectations ([#29580](https://github.com/laravel/framework/pull/29580))
+- Added ignoring of classes which are not instantiable during event discovery ([#29587](https://github.com/laravel/framework/pull/29587))
+- Used real classname for seeders in the output ([#29601](https://github.com/laravel/framework/pull/29601))
+
+### Refactoring
+- Simplified `isset()` ([#29581](https://github.com/laravel/framework/pull/29581))
+
+
+## [v5.8.32 (2019-08-13)](https://github.com/laravel/framework/compare/v5.8.31...v5.8.32)
+
+### Fixed
+- Fixed top level wildcard validation for `distinct` validator ([#29499](https://github.com/laravel/framework/pull/29499))
+- Fixed resolving of columns with schema references in Postgres ([#29448](https://github.com/laravel/framework/pull/29448))
+- Only remove the event mutex if it was created ([#29526](https://github.com/laravel/framework/pull/29526))
+- Fixed restoring serialized collection with deleted models ([#29533](https://github.com/laravel/framework/pull/29533), [74b62bb](https://github.com/laravel/framework/commit/74b62bbbb32674dfa167e2812231bf302454e67f))
+
+
+## [v5.8.31 (2019-08-06)](https://github.com/laravel/framework/compare/v5.8.30...v5.8.31)
+
+### Fixed
+- Fixed FatalThrowableError in `updateExistingPivot()` when pivot is non-existent ([#29362](https://github.com/laravel/framework/pull/29362))
+- Fixed worker timeout handler when there is no job processing ([#29366](https://github.com/laravel/framework/pull/29366))
+- Fixed `assertJsonValidationErrors()` with muliple messages ([#29380](https://github.com/laravel/framework/pull/29380))
+- Fixed UPDATE queries with alias ([#29405](https://github.com/laravel/framework/pull/29405))
+
+### Changed
+- `Illuminate\Cache\ArrayStore::forget()` returns false on missing key ([#29427](https://github.com/laravel/framework/pull/29427))
+- Allow chaining on `QueryBuilder::dump()` method ([#29437](https://github.com/laravel/framework/pull/29437))
+- Change visibility to public for `hasPivotColumn()` method ([#29367](https://github.com/laravel/framework/pull/29367))
+- Added line break for plain text mails ([#29408](https://github.com/laravel/framework/pull/29408))
+- Use `date_create` to prevent date validator warnings ([#29342](https://github.com/laravel/framework/pull/29342), [#29389](https://github.com/laravel/framework/pull/29389))
 
 
 ## [v5.8.30 (2019-07-30)](https://github.com/laravel/framework/compare/v5.8.29...v5.8.30)

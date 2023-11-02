@@ -1867,6 +1867,46 @@ class DatabaseQueryBuilderTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testInsertOrIgnoreMethod()
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('does not support');
+        $builder = $this->getBuilder();
+        $builder->from('users')->insertOrIgnore(['email' => 'foo']);
+    }
+
+    public function testMySqlInsertOrIgnoreMethod()
+    {
+        $builder = $this->getMySqlBuilder();
+        $builder->getConnection()->shouldReceive('affectingStatement')->once()->with('insert ignore into `users` (`email`) values (?)', ['foo'])->andReturn(1);
+        $result = $builder->from('users')->insertOrIgnore(['email' => 'foo']);
+        $this->assertEquals(1, $result);
+    }
+
+    public function testPostgresInsertOrIgnoreMethod()
+    {
+        $builder = $this->getPostgresBuilder();
+        $builder->getConnection()->shouldReceive('affectingStatement')->once()->with('insert into "users" ("email") values (?) on conflict do nothing', ['foo'])->andReturn(1);
+        $result = $builder->from('users')->insertOrIgnore(['email' => 'foo']);
+        $this->assertEquals(1, $result);
+    }
+
+    public function testSQLiteInsertOrIgnoreMethod()
+    {
+        $builder = $this->getSQLiteBuilder();
+        $builder->getConnection()->shouldReceive('affectingStatement')->once()->with('insert or ignore into "users" ("email") values (?)', ['foo'])->andReturn(1);
+        $result = $builder->from('users')->insertOrIgnore(['email' => 'foo']);
+        $this->assertEquals(1, $result);
+    }
+
+    public function testSqlServerInsertOrIgnoreMethod()
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('does not support');
+        $builder = $this->getSqlServerBuilder();
+        $builder->from('users')->insertOrIgnore(['email' => 'foo']);
+    }
+
     public function testInsertGetIdMethod()
     {
         $builder = $this->getBuilder();
@@ -2004,6 +2044,11 @@ class DatabaseQueryBuilderTest extends TestCase
         $builder = $this->getPostgresBuilder();
         $builder->getConnection()->shouldReceive('update')->once()->with('update "users" set "email" = ?, "name" = ? where "id" = ?', ['foo', 'bar', 1])->andReturn(1);
         $result = $builder->from('users')->where('id', '=', 1)->selectRaw('?', ['ignore'])->update(['users.email' => 'foo', 'name' => 'bar']);
+        $this->assertEquals(1, $result);
+
+        $builder = $this->getPostgresBuilder();
+        $builder->getConnection()->shouldReceive('update')->once()->with('update "users"."users" set "email" = ?, "name" = ? where "id" = ?', ['foo', 'bar', 1])->andReturn(1);
+        $result = $builder->from('users.users')->where('id', '=', 1)->selectRaw('?', ['ignore'])->update(['users.users.email' => 'foo', 'name' => 'bar']);
         $this->assertEquals(1, $result);
     }
 
